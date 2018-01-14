@@ -251,10 +251,25 @@
     <Compile Include="Migrations\201801140056334_SeedActivity.Designer.cs">
       <DependentUpon>201801140056334_SeedActivity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801141547528_AddPhoto.cs" />
+    <Compile Include="Migrations\201801141547528_AddPhoto.Designer.cs">
+      <DependentUpon>201801141547528_AddPhoto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801141628436_TagActivityJoinTable.cs" />
+    <Compile Include="Migrations\201801141628436_TagActivityJoinTable.Designer.cs">
+      <DependentUpon>201801141628436_TagActivityJoinTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801141656447_Category.cs" />
+    <Compile Include="Migrations\201801141656447_Category.Designer.cs">
+      <DependentUpon>201801141656447_Category.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\OrganizationCategory.cs" />
+    <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\DTO\ActivityDTO.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -366,6 +381,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801140056334_SeedActivity.resx">
       <DependentUpon>201801140056334_SeedActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801141547528_AddPhoto.resx">
+      <DependentUpon>201801141547528_AddPhoto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801141628436_TagActivityJoinTable.resx">
+      <DependentUpon>201801141628436_TagActivityJoinTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801141656447_Category.resx">
+      <DependentUpon>201801141656447_Category.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

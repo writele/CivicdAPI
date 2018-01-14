@@ -13,6 +13,8 @@ namespace CivicdAPI.Models
   {
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string Photo { get; set; }
+    public OrganizationCategory Category { get; set; }
     public virtual ICollection<UserActivity> UserActivities { get; set; }
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
     {

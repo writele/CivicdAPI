@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace CivicdAPI.Models
+{
+  public class Tag
+  {
+    public Tag()
+    {
+      this.Activities = new HashSet<Activity>();
+    }
+
+    [Key]
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public virtual ICollection<Activity> Activities { get; set; }
+  }
+}
