@@ -263,9 +263,19 @@
     <Compile Include="Migrations\201801141656447_Category.Designer.cs">
       <DependentUpon>201801141656447_Category.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801240138377_AddAddress.cs" />
+    <Compile Include="Migrations\201801240138377_AddAddress.Designer.cs">
+      <DependentUpon>201801240138377_AddAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801240158061_UserTags.cs" />
+    <Compile Include="Migrations\201801240158061_UserTags.Designer.cs">
+      <DependentUpon>201801240158061_UserTags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\LegalStatus.cs" />
     <Compile Include="Models\OrganizationCategory.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\DTO\ActivityDTO.cs" />
@@ -390,6 +400,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801141656447_Category.resx">
       <DependentUpon>201801141656447_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801240138377_AddAddress.resx">
+      <DependentUpon>201801240138377_AddAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801240158061_UserTags.resx">
+      <DependentUpon>201801240158061_UserTags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

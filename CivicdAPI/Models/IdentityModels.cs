@@ -11,10 +11,21 @@ namespace CivicdAPI.Models
   // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
   public class ApplicationUser : IdentityUser
   {
+    public ApplicationUser()
+    {
+      this.Tags = new List<Tag>();
+    }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string DisplayName { get; set; }
+    public string ProfileDescription { get; set; }
     public string Photo { get; set; }
+    public bool Verified { get; set; }
     public OrganizationCategory Category { get; set; }
+    public LegalStatus LegalStatus { get; set; }
+    public Address Address { get; set; }
+
+    public virtual ICollection<Tag> Tags { get; set; }
     public virtual ICollection<UserActivity> UserActivities { get; set; }
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
     {
@@ -39,5 +50,7 @@ namespace CivicdAPI.Models
 
     public DbSet<Activity> Activities { get; set; }
     public DbSet<UserActivity> UserActivities { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<Tag> Tags { get; set; }
   }
 }
