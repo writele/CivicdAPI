@@ -24,12 +24,27 @@ namespace CivicdAPI.Controllers
     // GET: api/Activity
     public IQueryable<ActivityDTO> Get()
     {
+
       var activities = from a in db.Activities
                        select new ActivityDTO()
                        {
                          Id = a.ID,
                          DisplayTitle = a.DisplayTitle,
-                         Description = a.Description
+                         Description = a.Description,
+                         CategoryName = a.Category.ToString(),
+                         PhotoURL = a.Photo,
+                         StartTime = a.StartTime.ToString(),
+                         EndTime = a.EndTime.ToString(),
+                         StreetAddressOne = a.Address.StreetAddressOne,
+                         StreetAddressTwo = a.Address.StreetAddressTwo,
+                         City = a.Address.City,
+                         State = a.Address.State,
+                         Tags = from t in a.Tags
+                                select new TagDTO()
+                                {
+                                  Id = t.ID,
+                                  Name = t.Name
+                                }
                        };
       return activities;
     }

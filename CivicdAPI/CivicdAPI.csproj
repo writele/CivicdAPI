@@ -275,6 +275,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\DTO\TagDTO.cs" />
     <Compile Include="Models\LegalStatus.cs" />
     <Compile Include="Models\OrganizationCategory.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
