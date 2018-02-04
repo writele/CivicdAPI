@@ -73,6 +73,25 @@ namespace CivicdAPI.Migrations
             }
          );
 
+      // Addresses
+      context.Addresses.AddOrUpdate(
+        p => p.ID,
+        new Address()
+        {
+          StreetAddressOne = "101 Main Street",
+          City = "Charlotte",
+          State = "NC",
+          ZipCode = "28215"
+        },
+        new Address()
+        {
+          StreetAddressOne = "2222 Ordinary Way",
+          City = "Charlotte",
+          State = "NC",
+          ZipCode = "28277"
+        }
+          );
+
       // Activities
       context.Activities.AddOrUpdate(
         p => p.DisplayTitle,
@@ -114,6 +133,7 @@ namespace CivicdAPI.Migrations
       var tag2 = context.Tags.Find(2);
       var tag3 = context.Tags.Find(3);
       var tag4 = context.Tags.Find(4);
+
       activity1.Tags.Add(tag1);
       activity1.Tags.Add(tag2);
       activity2.Tags.Add(tag3);
@@ -121,6 +141,12 @@ namespace CivicdAPI.Migrations
       activity3.Tags.Add(tag1);
       activity3.Tags.Add(tag2);
       activity3.Tags.Add(tag4);
+
+      // Add Address to Activity
+      var address1 = context.Addresses.Find(1);
+      var address2 = context.Addresses.Find(2);
+      activity1.Address = address1;
+      activity2.Address = address2;
 
       context.SaveChanges();
 
