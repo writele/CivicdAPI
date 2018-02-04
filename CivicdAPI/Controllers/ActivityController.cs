@@ -16,11 +16,14 @@ namespace CivicdAPI.Controllers
   {
     private ApplicationDbContext db = new ApplicationDbContext();
 
-    /// <summary>
-    /// Get list of all activities in database.
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
+        public DateTimeOffset StartTime { get; private set; }
+        public DateTimeOffset EndTime { get; private set; }
+
+        /// <summary>
+        /// Get list of all activities in database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
     // GET: api/Activity
     public IQueryable<ActivityDTO> Get()
     {
@@ -108,9 +111,37 @@ namespace CivicdAPI.Controllers
                        };
       return activities;
     }
+    //    // GET: api/Activity
+    //public IQueryable<ActivityDTO> GetTime()
+    //    {
 
-    //POST: api/Activity
-    public void Post([FromBody]string value)
+    //      var activities = from a in db.Activities
+    //                       where a.StartTime >= StartTime
+    //                       where a.StartTime <= EndTime
+    //                       select new ActivityDTO()
+    //                       {
+    //                         Id = a.ID,
+    //                         DisplayTitle = a.DisplayTitle,
+    //                         Description = a.Description,
+    //                         CategoryName = a.Category.ToString(),
+    //                         PhotoURL = a.Photo,
+    //                         StartTime = a.StartTime.ToString(),
+    //                         EndTime = a.EndTime.ToString(),
+    //                         StreetAddressOne = a.Address.StreetAddressOne,
+    //                         StreetAddressTwo = a.Address.StreetAddressTwo,
+    //                         City = a.Address.City,
+    //                         State = a.Address.State,
+    //                         Tags = from t in a.Tags
+    //                                select new TagDTO()
+    //                                {
+    //                                  Id = t.ID,
+    //                                  Name = t.Name
+    //                                }
+    //                       };
+    //        return activities;
+    //    }
+        //POST: api/Activity
+        public void Post([FromBody]string value)
     {
     }
 
