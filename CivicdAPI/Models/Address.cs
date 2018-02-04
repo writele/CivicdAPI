@@ -15,6 +15,7 @@ namespace CivicdAPI.Models
     }
     [Key]
     public int ID { get; set; }
+    public string Name { get; set; }
     public string StreetAddressOne { get; set; }
     public string StreetAddressTwo { get; set; }
     public string City { get; set; }

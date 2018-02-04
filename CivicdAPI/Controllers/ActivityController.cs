@@ -38,10 +38,12 @@ namespace CivicdAPI.Controllers
                          PhotoURL = a.Photo,
                          StartTime = a.StartTime.ToString(),
                          EndTime = a.EndTime.ToString(),
+                         AddressDisplayName = a.Address.Name,
                          StreetAddressOne = a.Address.StreetAddressOne,
                          StreetAddressTwo = a.Address.StreetAddressTwo,
                          City = a.Address.City,
                          State = a.Address.State,
+                         ZipCode = a.Address.ZipCode,
                          Tags = from t in a.Tags
                                 select new TagDTO()
                                 {
@@ -66,10 +68,12 @@ namespace CivicdAPI.Controllers
                          PhotoURL = a.Photo,
                          StartTime = a.StartTime.ToString(),
                          EndTime = a.EndTime.ToString(),
+                         AddressDisplayName = a.Address.Name,
                          StreetAddressOne = a.Address.StreetAddressOne,
                          StreetAddressTwo = a.Address.StreetAddressTwo,
                          City = a.Address.City,
                          State = a.Address.State,
+                         ZipCode = a.Address.ZipCode,
                          Tags = from t in a.Tags
                                 select new TagDTO()
                                 {

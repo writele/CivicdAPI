@@ -19,6 +19,7 @@ namespace CivicdAPI.Models.DTO
     public string PhotoURL { get; set; }
     public string StartTime { get; set; }
     public string EndTime { get; set; }
+    public string AddressDisplayName { get; set; }
     public string StreetAddressOne { get; set; }
     public string StreetAddressTwo { get; set; }
     public string City { get; set; }
