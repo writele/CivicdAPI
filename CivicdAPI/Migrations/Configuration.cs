@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CivicdAPI.Models;
 using Microsoft.AspNet.Identity;
 
@@ -64,9 +65,9 @@ namespace CivicdAPI.Migrations
         p => p.DisplayTitle,
             new Activity
             {
-                DisplayTitle = "City Council Meeting",
-                Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-                Category = ActivityCategory.Government
+              DisplayTitle = "City Council Meeting",
+              Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
+              Category = ActivityCategory.Government
             },
              new Activity
              {
@@ -89,15 +90,15 @@ namespace CivicdAPI.Migrations
             },
             new Tag
             {
-                Name = "Tag2",
+              Name = "Tag2",
             },
             new Tag
             {
-                Name = "Tag3",
+              Name = "Tag3",
             },
             new Tag
             {
-                Name = "Tag4",
+              Name = "Tag4",
             }
          );
     }

@@ -14,6 +14,13 @@ namespace CivicdAPI.Models
       this.Users = new HashSet<ApplicationUser>();
     }
 
+    public Tag(string name)
+    {
+      this.Name = name;
+      this.Activities = new HashSet<Activity>();
+      this.Users = new HashSet<ApplicationUser>();
+    }
+
     [Key]
     public int ID { get; set; }
     public string Name { get; set; }

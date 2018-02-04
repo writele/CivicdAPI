@@ -50,10 +50,63 @@ namespace CivicdAPI.Controllers
     }
 
     // GET: api/Activity/5
-    public string Get(int id)
+    public IQueryable<ActivityDTO> Get(int id)
     {
-      return "value";
+      var activities = from a in db.Activities
+                       where a.ID == id
+                       select new ActivityDTO()
+                       {
+                         Id = a.ID,
+                         DisplayTitle = a.DisplayTitle,
+                         Description = a.Description,
+                         CategoryName = a.Category.ToString(),
+                         PhotoURL = a.Photo,
+                         StartTime = a.StartTime.ToString(),
+                         EndTime = a.EndTime.ToString(),
+                         StreetAddressOne = a.Address.StreetAddressOne,
+                         StreetAddressTwo = a.Address.StreetAddressTwo,
+                         City = a.Address.City,
+                         State = a.Address.State,
+                         Tags = from t in a.Tags
+                                select new TagDTO()
+                                {
+                                  Id = t.ID,
+                                  Name = t.Name
+                                }
+                       };
+      return activities;
     }
+
+    //// GET: api/Activity/
+    //[Route("Category/{categoryName}")]
+    //public IQueryable<ActivityDTO> GetCategory(string categoryName)
+    //{
+    //  var category = Enum.Parse(typeof(ActivityCategory), categoryName);
+
+    //  var activities = from a in db.Activities
+    //                   where a.Category == 
+    //                   select new ActivityDTO()
+    //                   {
+    //                     Id = a.ID,
+    //                     DisplayTitle = a.DisplayTitle,
+    //                     Description = a.Description,
+    //                     CategoryName = a.Category.ToString(),
+    //                     PhotoURL = a.Photo,
+    //                     StartTime = a.StartTime.ToString(),
+    //                     EndTime = a.EndTime.ToString(),
+    //                     StreetAddressOne = a.Address.StreetAddressOne,
+    //                     StreetAddressTwo = a.Address.StreetAddressTwo,
+    //                     City = a.Address.City,
+    //                     State = a.Address.State,
+    //                     Tags = from t in a.Tags
+    //                            select new TagDTO()
+    //                            {
+    //                              Id = t.ID,
+    //                              Name = t.Name
+    //                            }
+    //                   };
+    //  return activities;
+    //}
 
     // POST: api/Activity
     public void Post([FromBody]string value)
