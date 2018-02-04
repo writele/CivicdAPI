@@ -9,12 +9,18 @@ namespace CivicdAPI.Models
   public enum OrganizationCategory
   {
     [Display(Name = "Regular User")]
-    RegularUser,
-    [Display(Name = "Category 2")]
-    Category2,
-    [Display(Name = "Category 3")]
-    Category3,
-    [Display(Name = "Category 4")]
-    Category4
+    NA,
+    [Display(Name = "Government")]
+    Government,
+    [Display(Name = "Educational")]
+    Educational,
+    [Display(Name = "Volunteer")]
+    Volunteer,
+    [Display(Name = "Neighborhood Association")]
+    Neighborhood,
+    [Display(Name = "Partisan Political")]
+    Political,
+    [Display(Name = "Non-partisan Political")]
+    Cause
   }
 }
