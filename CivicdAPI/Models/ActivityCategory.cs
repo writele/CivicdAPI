@@ -8,13 +8,19 @@ namespace CivicdAPI.Models
 {
   public enum ActivityCategory
   {
-    [Display(Name = "Category 1")]
-    Category1,
-    [Display(Name = "Category 2")]
-    Category2,
-    [Display(Name = "Category 3")]
-    Category3,
-    [Display(Name = "Category 4")]
-    Category4
-  }
+    [Display(Name = "Rally/Protest")]
+    Protest,
+    [Display(Name = "School Meeting")]
+    School,
+    [Display(Name = "Government Meeting")]
+    Government,
+    [Display(Name = "Internal Organization Meeting")]
+    Internal,
+    [Display(Name = "Informational Meeting")]
+    Informational,
+    [Display(Name = "Community Meeting")]
+    Community,
+    [Display(Name = "Independent Activity")]
+    IndependentActivity
+    }
 }

@@ -64,17 +64,42 @@ namespace CivicdAPI.Migrations
         p => p.DisplayTitle,
             new Activity
             {
-              DisplayTitle = "City Council Meeting",
-              Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-              Category = ActivityCategory.Category1
-            },
-              new Activity
-              {
-                DisplayTitle = "Phone Bank",
+                DisplayTitle = "City Council Meeting",
                 Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-                Category = ActivityCategory.Category2
-              }
+                Category = ActivityCategory.Government
+            },
+             new Activity
+             {
+               DisplayTitle = "Phone Bank",
+               Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
+               Category = ActivityCategory.Protest
+             },
+             new Activity
+             {
+               DisplayTitle = "School Meeting",
+               Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
+               Category = ActivityCategory.School
+             }
           );
+      context.Tags.AddOrUpdate(
+        p => p.Name,
+            new Tag
+            {
+              Name = "Tag1",
+            },
+            new Tag
+            {
+                Name = "Tag2",
+            },
+            new Tag
+            {
+                Name = "Tag3",
+            },
+            new Tag
+            {
+                Name = "Tag4",
+            }
+         );
     }
   }
 }

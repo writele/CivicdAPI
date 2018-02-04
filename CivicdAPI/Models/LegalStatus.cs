@@ -8,13 +8,9 @@ namespace CivicdAPI.Models
 {
   public enum LegalStatus
   {
-    [Display(Name = "N/A")]
-    RegularUser,
-    [Display(Name = "Category 2")]
-    Category2,
-    [Display(Name = "Category 3")]
-    Category3,
-    [Display(Name = "Category 4")]
-    Category4
+    [Display(Name = "None or N/A")]
+    NA,
+    [Display(Name = "501(c)(3)")]
+    Nonprofit
   }
 }
