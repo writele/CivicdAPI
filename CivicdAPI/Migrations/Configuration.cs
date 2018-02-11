@@ -54,33 +54,48 @@ namespace CivicdAPI.Migrations
           Email = "getcivicd@gmail.com",
           FirstName = "Civicd",
           LastName = "API",
-        }, "password1!");
+        }, "Password1!");
       }
 
       var userId = userManager.FindByEmail("getcivicd@gmail.com").Id;
       userManager.AddToRole(userId, "Admin");
 
+      if (!context.Users.Any(u => u.Email == "civicdgroup@mailinator.com"))
+      {
+        userManager.Create(new ApplicationUser
+        {
+          UserName = "civicdgroup@mailinator.com",
+          Email = "civicdgroup@mailinator.com",
+          FirstName = "Test",
+          LastName = "Organization",
+          DisplayName = "Civicd Group"
+        }, "Password1!");
+      }
+
+      var userId2 = userManager.FindByEmail("civicdgroup@mailinator.com").Id;
+      userManager.AddToRole(userId2, "Organization");
+
       context.Activities.AddOrUpdate(
-        p => p.DisplayTitle,
-            new Activity
-            {
-                DisplayTitle = "City Council Meeting",
-                Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-                Category = ActivityCategory.Government
-            },
-             new Activity
-             {
-               DisplayTitle = "Phone Bank",
-               Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-               Category = ActivityCategory.Protest
-             },
-             new Activity
-             {
-               DisplayTitle = "School Meeting",
-               Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-               Category = ActivityCategory.School
-             }
-          );
+      p => p.DisplayTitle,
+      new Activity
+      {
+        DisplayTitle = "City Council Meeting",
+        Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
+        Category = ActivityCategory.Government
+      },
+       new Activity
+       {
+         DisplayTitle = "Phone Bank",
+         Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
+         Category = ActivityCategory.Protest
+       },
+       new Activity
+       {
+         DisplayTitle = "School Meeting",
+         Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
+         Category = ActivityCategory.School
+       }
+    );
       context.Tags.AddOrUpdate(
         p => p.Name,
             new Tag
@@ -89,15 +104,15 @@ namespace CivicdAPI.Migrations
             },
             new Tag
             {
-                Name = "Tag2",
+              Name = "Tag2",
             },
             new Tag
             {
-                Name = "Tag3",
+              Name = "Tag3",
             },
             new Tag
             {
-                Name = "Tag4",
+              Name = "Tag4",
             }
          );
     }
