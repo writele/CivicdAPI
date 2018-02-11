@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace CivicdAPI.Controllers
 {
   [RoutePrefix("api/Activities")]
-  public class ActivityController : ApiController
+  public class ActivityListController : ApiController
   {
     private ApplicationDbContext db = new ApplicationDbContext();
 
