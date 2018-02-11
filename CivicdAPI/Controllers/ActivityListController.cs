@@ -11,11 +11,12 @@ using Newtonsoft.Json;
 
 namespace CivicdAPI.Controllers
 {
-  [RoutePrefix("api/Activity")]
-  public class ActivityController : ApiController
+  [RoutePrefix("api/Activities")]
+  public class ActivityListController : ApiController
   {
     private ApplicationDbContext db = new ApplicationDbContext();
 
+<<<<<<< HEAD:CivicdAPI/Controllers/ActivityController.cs
         public DateTimeOffset StartTime { get; private set; }
         public DateTimeOffset EndTime { get; private set; }
 
@@ -25,6 +26,14 @@ namespace CivicdAPI.Controllers
         /// <returns></returns>
         [HttpGet]
     // GET: api/Activity
+=======
+    /// <summary>
+    /// Get list of all activities in database.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    // GET: api/Activities
+>>>>>>> 86a1b1aa572ba6de1be295f41657ff0e0968f15d:CivicdAPI/Controllers/ActivityListController.cs
     public IQueryable<ActivityDTO> Get()
     {
 
@@ -54,7 +63,7 @@ namespace CivicdAPI.Controllers
       return activities;
     }
 
-    // GET: api/Activity/5
+    // GET: api/Activities/5
     public IQueryable<ActivityDTO> Get(int id)
     {
       var activities = from a in db.Activities
@@ -84,7 +93,7 @@ namespace CivicdAPI.Controllers
       return activities;
     }
 
-    // GET: api/Activity/
+    // GET: api/Activities/
     [Route("Category/{categoryName}")]
     public IQueryable<ActivityDTO> GetCategory(string categoryName)
     {
@@ -119,6 +128,7 @@ namespace CivicdAPI.Controllers
     //public IQueryable<ActivityDTO> GetTime()
     //    {
 
+<<<<<<< HEAD:CivicdAPI/Controllers/ActivityController.cs
     //      var activities = from a in db.Activities
     //                       where a.StartTime >= StartTime
     //                       where a.StartTime <= EndTime
@@ -158,5 +168,7 @@ namespace CivicdAPI.Controllers
     public void Delete(int id)
     {
     }
+=======
+>>>>>>> 86a1b1aa572ba6de1be295f41657ff0e0968f15d:CivicdAPI/Controllers/ActivityListController.cs
   }
 }
