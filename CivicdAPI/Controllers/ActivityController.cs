@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace CivicdAPI.Controllers
 {
-  [RoutePrefix("api/Activity")]
+  [RoutePrefix("api/Activities")]
   public class ActivityController : ApiController
   {
     private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,7 +21,7 @@ namespace CivicdAPI.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    // GET: api/Activity
+    // GET: api/Activities
     public IQueryable<ActivityDTO> Get()
     {
 
@@ -51,7 +51,7 @@ namespace CivicdAPI.Controllers
       return activities;
     }
 
-    // GET: api/Activity/5
+    // GET: api/Activities/5
     public IQueryable<ActivityDTO> Get(int id)
     {
       var activities = from a in db.Activities
@@ -81,7 +81,7 @@ namespace CivicdAPI.Controllers
       return activities;
     }
 
-    // GET: api/Activity/
+    // GET: api/Activities/
     [Route("Category/{categoryName}")]
     public IQueryable<ActivityDTO> GetCategory(string categoryName)
     {
@@ -113,19 +113,5 @@ namespace CivicdAPI.Controllers
       return activities;
     }
 
-    //POST: api/Activity
-    public void Post([FromBody]string value)
-    {
-    }
-
-    // PUT: api/Activity/5
-    public void Put(int id, [FromBody]string value)
-    {
-    }
-
-    // DELETE: api/Activity/5
-    public void Delete(int id)
-    {
-    }
   }
 }
