@@ -15,13 +15,6 @@ https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-
 After you first pull or clone the project, you will need to make changes to CivicdAPI/connections.config.example. 
 **Copy** this file and take off the .example, renaming it to connections.config. Do NOT delete or rename the original connections.config.example.
 
-It will look like this:
-<connectionStrings>
-  <add name="DefaultConnection"
-       providerName="System.Data.SqlClient"
-       connectionString="Valid Connection String;" />
-</connectionStrings>
-
 Replace "Valid Connection String" with the connection string to your local database. 
 
 You can set up a database using Server Explorer. 
