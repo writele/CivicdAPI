@@ -16,24 +16,12 @@ namespace CivicdAPI.Controllers
   {
     private ApplicationDbContext db = new ApplicationDbContext();
 
-<<<<<<< HEAD:CivicdAPI/Controllers/ActivityController.cs
-        public DateTimeOffset StartTime { get; private set; }
-        public DateTimeOffset EndTime { get; private set; }
-
-        /// <summary>
-        /// Get list of all activities in database.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-    // GET: api/Activity
-=======
     /// <summary>
     /// Get list of all activities in database.
     /// </summary>
     /// <returns></returns>
     [HttpGet]
     // GET: api/Activities
->>>>>>> 86a1b1aa572ba6de1be295f41657ff0e0968f15d:CivicdAPI/Controllers/ActivityListController.cs
     public IQueryable<ActivityDTO> Get()
     {
 
@@ -124,51 +112,6 @@ namespace CivicdAPI.Controllers
                        };
       return activities;
     }
-    //    // GET: api/Activity
-    //public IQueryable<ActivityDTO> GetTime()
-    //    {
 
-<<<<<<< HEAD:CivicdAPI/Controllers/ActivityController.cs
-    //      var activities = from a in db.Activities
-    //                       where a.StartTime >= StartTime
-    //                       where a.StartTime <= EndTime
-    //                       select new ActivityDTO()
-    //                       {
-    //                         Id = a.ID,
-    //                         DisplayTitle = a.DisplayTitle,
-    //                         Description = a.Description,
-    //                         CategoryName = a.Category.ToString(),
-    //                         PhotoURL = a.Photo,
-    //                         StartTime = a.StartTime.ToString(),
-    //                         EndTime = a.EndTime.ToString(),
-    //                         StreetAddressOne = a.Address.StreetAddressOne,
-    //                         StreetAddressTwo = a.Address.StreetAddressTwo,
-    //                         City = a.Address.City,
-    //                         State = a.Address.State,
-    //                         Tags = from t in a.Tags
-    //                                select new TagDTO()
-    //                                {
-    //                                  Id = t.ID,
-    //                                  Name = t.Name
-    //                                }
-    //                       };
-    //        return activities;
-    //    }
-        //POST: api/Activity
-        public void Post([FromBody]string value)
-    {
-    }
-
-    // PUT: api/Activity/5
-    public void Put(int id, [FromBody]string value)
-    {
-    }
-
-    // DELETE: api/Activity/5
-    public void Delete(int id)
-    {
-    }
-=======
->>>>>>> 86a1b1aa572ba6de1be295f41657ff0e0968f15d:CivicdAPI/Controllers/ActivityListController.cs
   }
 }
