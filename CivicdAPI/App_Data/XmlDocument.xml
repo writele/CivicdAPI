@@ -481,7 +481,7 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:CivicdAPI.Controllers.ActivityController.Get">
+        <member name="M:CivicdAPI.Controllers.ActivityListController.Get">
             <summary>
             Get list of all activities in database.
             </summary>

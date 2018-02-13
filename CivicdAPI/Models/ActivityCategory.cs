@@ -22,5 +22,5 @@ namespace CivicdAPI.Models
     Community,
     [Display(Name = "Independent Activity")]
     IndependentActivity
-    }
+  }
 }

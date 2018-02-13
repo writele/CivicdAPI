@@ -13,12 +13,15 @@ namespace CivicdAPI.Models.DTO
       this.Tags = new HashSet<TagDTO>();
     }
     public int Id { get; set; }
+    public string HostOrganizationDisplayName { get; set; }
+    public string HostOrganizationUserName { get; set; }
     public string DisplayTitle { get; set; }
     public string Description { get; set; }
     public string CategoryName { get; set; }
     public string PhotoURL { get; set; }
     public string StartTime { get; set; }
     public string EndTime { get; set; }
+    public string AddressDisplayName { get; set; }
     public string StreetAddressOne { get; set; }
     public string StreetAddressTwo { get; set; }
     public string City { get; set; }
