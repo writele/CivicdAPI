@@ -10,7 +10,10 @@ namespace CivicdAPI.Models
 {
   public class Activity
   {
-    public Activity()
+        internal DateTime Begins;
+        internal DateTime Expires;
+
+        public Activity()
     {
       this.Tags = new HashSet<Tag>();
     }
