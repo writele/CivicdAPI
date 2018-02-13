@@ -80,9 +80,39 @@ namespace CivicdAPI.Controllers
                        };
       return activities;
     }
+public IQueryable<ActivityDTO> GetTime(int activityTime)
+{
+    DateTime RightNow = DateTime.Now;
+    var activities = from a in db.Activities
+                        where (a.Begins <= RightNow) && (a.Expires >= RightNow)
+                        select new ActivityDTO()
+                        {
+                            Id = a.ID,
+                            DisplayTitle = a.DisplayTitle,
+                            Description = a.Description,
+                            CategoryName = a.Category.ToString(),
+                            PhotoURL = a.Photo,
+                            StartTime = a.StartTime.ToString(),
+                            EndTime = a.EndTime.ToString(),
+                            AddressDisplayName = a.Address.Name,
+                            StreetAddressOne = a.Address.StreetAddressOne,
+                            StreetAddressTwo = a.Address.StreetAddressTwo,
+                            City = a.Address.City,
+                            State = a.Address.State,
+                            ZipCode = a.Address.ZipCode,
+                            Tags = from t in a.Tags
+                                select new TagDTO()
+                                {
+                                    Id = t.ID,
+                                    Name = t.Name
+                                }
+                        };
+    return activities;
+}
 
-    // GET: api/Activities/
-    [Route("Category/{categoryName}")]
+
+        // GET: api/Activities/
+        [Route("Category/{categoryName}")]
     public IQueryable<ActivityDTO> GetCategory(string categoryName)
     {
       var categoryInt = (ActivityCategory)Enum.Parse(typeof(ActivityCategory), categoryName, true);
