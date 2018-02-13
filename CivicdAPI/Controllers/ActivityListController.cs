@@ -80,7 +80,7 @@ namespace CivicdAPI.Controllers
                        };
       return activities;
     }
-public IQueryable<ActivityDTO> GetTime(int activityTime)
+public IQueryable<ActivityDTO> GetActivityTime(int activityTime)
 {
     DateTime RightNow = DateTime.Now;
     var activities = from a in db.Activities
