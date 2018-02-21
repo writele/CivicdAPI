@@ -1,7 +1,9 @@
 ﻿using CivicdAPI.Models;
-using CivicdAPI.Models.Profile;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CivicdAPI.Controllers
@@ -9,18 +11,38 @@ namespace CivicdAPI.Controllers
 
     [Authorize]
     [RoutePrefix("api/")]
-    public class ProfileController
+    public class ProfileController : ApiController
     {
         private ApplicationDbContext context = new ApplicationDbContext();
-
+        private ApplicationUserManager _userManager;
         public ProfileController()
         {
         }
 
-        [Route("user/{UserEmail}")]
-        public UserViewModel GetUserByEmail(string UserEmail)
+        public ApplicationUserManager UserManager
         {
-            var matchedUser = context.Users.FirstOrDefault(u => u.Email.Equals(UserEmail));
+            get
+            {
+                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        [HttpGet]
+        [Route("user/{userEmail}")]
+        public async Task<UserViewModel> GetUserByEmail(string userEmail)
+        {
+
+            var matchedUser = await UserManager.FindByEmailAsync(userEmail).ConfigureAwait(false);
+            if (!await UserManager.IsInRoleAsync(matchedUser.Id, "User"))
+            {
+                //TODO: Specific exception message maybe?
+                throw new Exception("Unable to Find Matching User");
+            }
+
             return new UserViewModel
             {
                 Email = matchedUser.Email,
@@ -32,15 +54,46 @@ namespace CivicdAPI.Controllers
                 StreetAddressTwo = matchedUser.Address.StreetAddressTwo,
                 City = matchedUser.Address.City,
                 State = matchedUser.Address.State,
-                ZipCode = matchedUser.Address.ZipCode
+                ZipCode = matchedUser.Address.ZipCode,
+                Tags = matchedUser.Tags.Select(t => new Models.DTO.TagDTO
+                {
+                    Id = t.ID,
+                    Name = t.Name
+                })
             };
+
         }
 
-        [Route("")]
-        public OrganizationViewModel GetOrganizationById(int organizationId)
+        [HttpGet]
+        [Route("organizations/{organizationId}")]
+        public async Task<OrganizationViewModel> GetOrganizationById(string organizationId)
         {
-            //TODO: Context doesn't contain an organizations entity collection. Talk to Ele about that 
-            return null;
+            var matchedOrganization = await UserManager.FindByIdAsync(organizationId).ConfigureAwait(false);
+            if(!await UserManager.IsInRoleAsync(matchedOrganization.Id, "Organization"))
+            {
+                //TODO: specific exception message
+                throw new Exception("Unable to Find Matching Organization.");
+            }
+
+            return new OrganizationViewModel
+            {
+                Email = matchedOrganization.Email,
+                DisplayName = matchedOrganization.DisplayName,
+                FirstName = matchedOrganization.FirstName,
+                LastName = matchedOrganization.LastName,
+                OrganizationCategory = matchedOrganization.Category,
+                ProfileDescription = matchedOrganization.ProfileDescription,
+                StreetAddressOne = matchedOrganization.Address.StreetAddressOne,
+                StreetAddressTwo = matchedOrganization.Address.StreetAddressTwo,
+                City = matchedOrganization.Address.City,
+                State = matchedOrganization.Address.State,
+                ZipCode = matchedOrganization.Address.ZipCode,
+                Tags = matchedOrganization.Tags.Select(t => new Models.DTO.TagDTO
+                {
+                    Id = t.ID,
+                    Name = t.Name
+                })
+            };
         }
     }
 

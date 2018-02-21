@@ -298,8 +298,8 @@
     <Compile Include="Models\OrganizationCategory.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\DTO\ActivityDTO.cs" />
-    <Compile Include="Models\Profile\OrganizationViewModel.cs" />
-    <Compile Include="Models\Profile\UserViewModel.cs" />
+    <Compile Include="Models\OrganizationViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
