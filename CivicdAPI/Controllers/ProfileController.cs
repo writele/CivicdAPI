@@ -8,9 +8,8 @@ using System.Web.Http;
 
 namespace CivicdAPI.Controllers
 {
-
-    [Authorize]
-    [RoutePrefix("api/")]
+    
+    [RoutePrefix("api")]
     public class ProfileController : ApiController
     {
         private ApplicationDbContext context = new ApplicationDbContext();
@@ -32,12 +31,12 @@ namespace CivicdAPI.Controllers
         }
 
         [HttpGet]
-        [Route("user/{userEmail}")]
+        [Route("User/{userEmail}")]
         public async Task<UserViewModel> GetUserByEmail(string userEmail)
         {
 
-            var matchedUser = await UserManager.FindByEmailAsync(userEmail).ConfigureAwait(false);
-            if (!await UserManager.IsInRoleAsync(matchedUser.Id, "User"))
+            var matchedUser = context.Users.FirstOrDefault(user => user.Email == userEmail);
+            if (await UserManager.IsInRoleAsync(matchedUser.Id, "User"))
             {
                 //TODO: Specific exception message maybe?
                 throw new Exception("Unable to Find Matching User");
@@ -50,12 +49,12 @@ namespace CivicdAPI.Controllers
                 FirstName = matchedUser.FirstName,
                 LastName = matchedUser.LastName,
                 ProfileDescription = matchedUser.ProfileDescription,
-                StreetAddressOne = matchedUser.Address.StreetAddressOne,
-                StreetAddressTwo = matchedUser.Address.StreetAddressTwo,
-                City = matchedUser.Address.City,
-                State = matchedUser.Address.State,
-                ZipCode = matchedUser.Address.ZipCode,
-                Tags = matchedUser.Tags.Select(t => new Models.DTO.TagDTO
+                StreetAddressOne = matchedUser.Address?.StreetAddressOne,
+                StreetAddressTwo = matchedUser.Address?.StreetAddressTwo,
+                City = matchedUser.Address?.City,
+                State = matchedUser.Address?.State,
+                ZipCode = matchedUser.Address?.ZipCode,
+                Tags = matchedUser.Tags?.Select(t => new Models.DTO.TagDTO
                 {
                     Id = t.ID,
                     Name = t.Name
@@ -65,11 +64,11 @@ namespace CivicdAPI.Controllers
         }
 
         [HttpGet]
-        [Route("organizations/{organizationId}")]
+        [Route("Organizations/{organizationId}")]
         public async Task<OrganizationViewModel> GetOrganizationById(string organizationId)
         {
-            var matchedOrganization = await UserManager.FindByIdAsync(organizationId).ConfigureAwait(false);
-            if(!await UserManager.IsInRoleAsync(matchedOrganization.Id, "Organization"))
+            var matchedOrganization = context.Users.FirstOrDefault(org => org.Id == organizationId);
+            if(await UserManager.IsInRoleAsync(matchedOrganization.Id, "Organization"))
             {
                 //TODO: specific exception message
                 throw new Exception("Unable to Find Matching Organization.");
@@ -83,12 +82,12 @@ namespace CivicdAPI.Controllers
                 LastName = matchedOrganization.LastName,
                 OrganizationCategory = matchedOrganization.Category,
                 ProfileDescription = matchedOrganization.ProfileDescription,
-                StreetAddressOne = matchedOrganization.Address.StreetAddressOne,
-                StreetAddressTwo = matchedOrganization.Address.StreetAddressTwo,
-                City = matchedOrganization.Address.City,
-                State = matchedOrganization.Address.State,
-                ZipCode = matchedOrganization.Address.ZipCode,
-                Tags = matchedOrganization.Tags.Select(t => new Models.DTO.TagDTO
+                StreetAddressOne = matchedOrganization.Address?.StreetAddressOne,
+                StreetAddressTwo = matchedOrganization.Address?.StreetAddressTwo,
+                City = matchedOrganization.Address?.City,
+                State = matchedOrganization.Address?.State,
+                ZipCode = matchedOrganization.Address?.ZipCode,
+                Tags = matchedOrganization.Tags?.Select(t => new Models.DTO.TagDTO
                 {
                     Id = t.ID,
                     Name = t.Name
