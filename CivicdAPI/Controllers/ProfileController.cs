@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace CivicdAPI.Controllers
 {
-    
+    [Authorize]
     [RoutePrefix("api")]
     public class ProfileController : ApiController
     {
