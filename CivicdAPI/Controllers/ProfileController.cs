@@ -12,7 +12,6 @@ namespace CivicdAPI.Controllers
     [RoutePrefix("api")]
     public class ProfileController : ApiController
     {
-        private ApplicationDbContext context = new ApplicationDbContext();
         private ApplicationUserManager _userManager;
         public ProfileController()
         {
@@ -35,7 +34,7 @@ namespace CivicdAPI.Controllers
         public async Task<UserViewModel> GetUserByEmail(string userEmail)
         {
 
-            var matchedUser = context.Users.FirstOrDefault(user => user.Email == userEmail);
+            var matchedUser = await UserManager.FindByEmailAsync(userEmail).ConfigureAwait(false);
             if (await UserManager.IsInRoleAsync(matchedUser.Id, "User"))
             {
                 //TODO: Specific exception message maybe?
@@ -67,7 +66,7 @@ namespace CivicdAPI.Controllers
         [Route("Organizations/{organizationId}")]
         public async Task<OrganizationViewModel> GetOrganizationById(string organizationId)
         {
-            var matchedOrganization = context.Users.FirstOrDefault(org => org.Id == organizationId);
+            var matchedOrganization = await UserManager.FindByIdAsync(organizationId);
             if(await UserManager.IsInRoleAsync(matchedOrganization.Id, "Organization"))
             {
                 //TODO: specific exception message
