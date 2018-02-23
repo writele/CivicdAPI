@@ -35,7 +35,7 @@ namespace CivicdAPI.Controllers
         {
 
             var matchedUser = await UserManager.FindByEmailAsync(userEmail).ConfigureAwait(false);
-            if (await UserManager.IsInRoleAsync(matchedUser.Id, "User"))
+            if (matchedUser == null)
             {
                 //TODO: Specific exception message maybe?
                 throw new Exception("Unable to Find Matching User");
@@ -67,7 +67,7 @@ namespace CivicdAPI.Controllers
         public async Task<OrganizationViewModel> GetOrganizationById(string organizationId)
         {
             var matchedOrganization = await UserManager.FindByIdAsync(organizationId);
-            if(await UserManager.IsInRoleAsync(matchedOrganization.Id, "Organization"))
+            if(matchedOrganization == null)
             {
                 //TODO: specific exception message
                 throw new Exception("Unable to Find Matching Organization.");
