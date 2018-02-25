@@ -253,6 +253,7 @@
     <Compile Include="Controllers\ActivityListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -289,8 +290,8 @@
       <DependentUpon>201802042224318_AddressName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountBindingModel.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Binding\AccountBindingModel.cs" />
+    <Compile Include="Models\Binding\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
@@ -298,8 +299,8 @@
     <Compile Include="Models\OrganizationCategory.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\DTO\ActivityDTO.cs" />
-    <Compile Include="Models\OrganizationViewModel.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\DTO\OrganizationViewModel.cs" />
+    <Compile Include="Models\DTO\UserViewModel.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
