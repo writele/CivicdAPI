@@ -54,7 +54,7 @@ namespace CivicdAPI.Controllers
     [AllowAnonymous]
     [Route("Users")]
     [HttpPost]
-    public async Task<IHttpActionResult> Register(UserViewModel model)
+    public async Task<IHttpActionResult> Register(UserDTO model)
     {
       if (!ModelState.IsValid)
       {
@@ -102,7 +102,7 @@ namespace CivicdAPI.Controllers
 
     [HttpGet]
     [Route("Users/{userEmail}")]
-    public async Task<UserViewModel> GetUserByEmail(string userEmail)
+    public async Task<UserDTO> GetUserByEmail(string userEmail)
     {
 
       var matchedUser = await UserManager.FindByEmailAsync(userEmail).ConfigureAwait(false);
@@ -112,7 +112,7 @@ namespace CivicdAPI.Controllers
         throw new Exception("Unable to Find Matching User");
       }
 
-      return new UserViewModel
+      return new UserDTO
       {
         Email = matchedUser.Email,
         DisplayName = matchedUser.DisplayName,

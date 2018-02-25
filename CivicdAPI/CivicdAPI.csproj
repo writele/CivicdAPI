@@ -300,7 +300,7 @@
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\DTO\ActivityDTO.cs" />
     <Compile Include="Models\DTO\OrganizationViewModel.cs" />
-    <Compile Include="Models\DTO\UserViewModel.cs" />
+    <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />

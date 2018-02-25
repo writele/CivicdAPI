@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CivicdAPI.Models
 {
-  public class UserViewModel
+  public class UserDTO
   {
     [Required]
     public string Email { get; set; }
