@@ -26,6 +26,19 @@ The connection string can also be retrieved through Server Explorer. Right click
 
 In the Package Manager Console, run the command "update-database". This will create the database tables, as well as populate them with test data. 
 
+## User Logins
+
+The following users will be created in your local database. The password for each is "Password1!".
+
+Admin
+getcivicd@gmail.com
+
+Organization
+civicdgroup@mailinator.com
+
+User
+civicduser@mailinator.com
+
 ## Contributing to the project
 
 Please explore the <a href="https://codeforcharlotte.atlassian.net/wiki/spaces/MVOTE/pages">Confluence page</a> for Civicd. Be sure to read over the <a href="https://codeforcharlotte.atlassian.net/wiki/spaces/MVOTE/pages/53837825/API+Specs">API Specs</a>.

@@ -67,6 +67,21 @@ namespace CivicdAPI.Migrations
       var userId2 = userManager.FindByEmail("civicdgroup@mailinator.com").Id;
       userManager.AddToRole(userId2, "Organization");
 
+      if (!context.Users.Any(u => u.Email == "civicduser@mailinator.com"))
+      {
+        userManager.Create(new ApplicationUser
+        {
+          UserName = "civicduser@mailinator.com",
+          Email = "civicduser@mailinator.com",
+          FirstName = "Test",
+          LastName = "User",
+          DisplayName = "Civicd User"
+        }, "Password1!");
+      }
+
+      var userId3 = userManager.FindByEmail("civicduser@mailinator.com").Id;
+      userManager.AddToRole(userId3, "User");
+
       context.Activities.AddOrUpdate(
       p => p.DisplayTitle,
       new Activity
