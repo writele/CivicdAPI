@@ -90,11 +90,17 @@ namespace CivicdAPI.Controllers
         Tags = tags
       };
 
-      IdentityResult result = await UserManager.CreateAsync(user, model.Password.ToString());
+      IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
       if (!result.Succeeded)
       {
         return GetErrorResult(result);
+      }
+
+      if (result.Succeeded)
+      {
+        var userId = UserManager.FindByEmail(model.Email).Id;
+        UserManager.AddToRole(userId, "User");
       }
 
       return Ok();
