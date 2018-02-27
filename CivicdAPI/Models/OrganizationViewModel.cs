@@ -12,8 +12,6 @@ namespace CivicdAPI.Models
     {
         [Required]
         public string Email { get; set; }
-        [Required]
-        public SecureString Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Required]
