@@ -1,4 +1,6 @@
-﻿using CivicdAPI.Models;
+﻿using CivicdAPI.Controllers.Helpers;
+using CivicdAPI.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,6 @@ namespace CivicdAPI.Controllers
     [RoutePrefix("api")]
     public class ActivityActionController : ApiController
     {
-
         [HttpPost]
         [Route("activities/{activityId:int}/rsvps/{userName}")]
         public bool RSVP(int activityId, string userName)
@@ -74,14 +75,22 @@ namespace CivicdAPI.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                //Todo: Check security to ensure org is creating activity.
+                var user = context.Users.Single(u => u.Id == User.Identity.GetUserId());
+                var organization = context.Users.Single(u => u.Email == activity.Organization.Email);
+
+                var userIsAdmin = User.IsInRole("Admin");
+                var userIsOrg = User.IsInRole("Organization");
+                if (User.IsInRole("User") || ( userIsOrg && user.Id != organization.Id))
+                {
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
+                }
+
                 var activityEntity = new Activity()
                 {
                     DisplayTitle = activity.DisplayTitle,
                     Category = activity.CategoryName,
                     StartTime = activity.StartTime,
-                    EndTime = activity.EndTime,
-
+                    EndTime = activity.EndTime
                 };
 
                 if (!String.IsNullOrEmpty(activity.StreetAddressOne))
@@ -97,7 +106,17 @@ namespace CivicdAPI.Controllers
                     };
                 }
 
+                var userActivity = new UserActivity()
+                {
+                    Activity = activityEntity,
+                    User = user,
+                    Host = !userIsAdmin,
+                    CheckedIn = organization.Id == user.Id
+                };
+                
                 context.Activities.Add(activityEntity);
+                context.UserActivities.Add(userActivity);
+
                 context.SaveChanges();
                 activity.Id = activityEntity.ID;
 
@@ -111,7 +130,17 @@ namespace CivicdAPI.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                var activityEntity = context.Activities.FirstOrDefault(a => a.ID == activityId);
+                var user = context.Users.Single(u => u.Id == User.Identity.GetUserId());
+                var organization = context.Users.Single(u => u.Email == activity.Organization.Email);
+
+                var userIsAdmin = User.IsInRole("Admin");
+                var userIsOrg = User.IsInRole("Organization");
+                if (User.IsInRole("User") || (userIsOrg && user.Id != organization.Id))
+                {
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
+                }
+
+                var activityEntity = context.UserActivities.FirstOrDefault(a => a.ActivityID == activityId && user.Id == a.UserID).Activity;
                 if (activityEntity == null)
                 {
                     throw new Exception("Unable to Find Matching Activity");
@@ -157,13 +186,24 @@ namespace CivicdAPI.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                var activityEntity = context.Activities.FirstOrDefault(a => a.ID == activityId);
+                var user = context.Users.Single(u => u.Id == User.Identity.GetUserId());
+                var activityEntity = context.UserActivities.Include("Activities").FirstOrDefault(a => a.ActivityID == activityId);
+
+                var organization = context.Users.Single(u => u.Email == activityEntity.User.Email);
+
+                var userIsAdmin = User.IsInRole("Admin");
+                var userIsOrg = User.IsInRole("Organization");
+                if (User.IsInRole("User") || (userIsOrg && user.Id != organization.Id))
+                {
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
+                }
                 if (activityEntity == null)
                 {
                     throw new Exception("Unable to Find Matching Activity");
                 }
 
-                context.Activities.Remove(activityEntity);
+                context.Activities.Remove(activityEntity.Activity);
+                context.UserActivities.Remove(activityEntity);
 
                 context.SaveChanges();
                 return true;

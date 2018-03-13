@@ -252,6 +252,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivityActionController.cs" />
     <Compile Include="Controllers\ActivityListController.cs" />
+    <Compile Include="Controllers\Helpers\UserRoleHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
@@ -289,6 +290,10 @@
     <Compile Include="Migrations\201802042224318_AddressName.Designer.cs">
       <DependentUpon>201802042224318_AddressName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802280142391_UserActivityMigration.cs" />
+    <Compile Include="Migrations\201802280142391_UserActivityMigration.Designer.cs">
+      <DependentUpon>201802280142391_UserActivityMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -309,6 +314,9 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <EmbeddedResource Include="Migrations\201802280142391_UserActivityMigration.resx">
+      <DependentUpon>201802280142391_UserActivityMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

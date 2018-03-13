@@ -26,6 +26,7 @@ namespace CivicdAPI.Models
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public OrganizationViewModel Organization { get; set; }
         
         public IEnumerable<TagDTO> Tags { get; set; }
     }
