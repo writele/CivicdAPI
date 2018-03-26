@@ -34,6 +34,10 @@ namespace CivicdAPI.Controllers
         {
           throw new Exception("Invalid Activity Id");
         }
+        if (!User.IsInRole("Admin") && User.Identity.GetUserId() != user.Id)
+        {
+          throw new HttpResponseException(HttpStatusCode.Forbidden);
+        }
 
         rsvp.Activity = activity;
         rsvp.User = user;
@@ -61,6 +65,10 @@ namespace CivicdAPI.Controllers
         if (activity == null)
         {
           throw new Exception("Invalid Activity or User is Not RSVP'd for this Activity");
+        }
+        if (!User.IsInRole("Admin") && User.Identity.GetUserId() != user.Id)
+        {
+          throw new HttpResponseException(HttpStatusCode.Forbidden);
         }
 
         activity.CheckedIn = true;
