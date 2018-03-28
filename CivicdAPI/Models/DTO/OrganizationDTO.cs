@@ -8,13 +8,12 @@ using System.Web;
 
 namespace CivicdAPI.Models
 {
-    public class OrganizationViewModel
+    public class OrganizationDTO
     {
         [Required]
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Required]
         public string DisplayName { get; set; }
         [Required]
         public OrganizationCategory OrganizationCategory { get; set; }
