@@ -250,43 +250,49 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityActionController.cs" />
     <Compile Include="Controllers\ActivityListController.cs" />
+    <Compile Include="Controllers\Helpers\UserRoleHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801140005599_CreateUser.cs" />
+    <EmbeddedResource Include="Migrations\201801140005599_CreateUser.cs" />
     <Compile Include="Migrations\201801140005599_CreateUser.Designer.cs">
       <DependentUpon>201801140005599_CreateUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801140056334_SeedActivity.cs" />
+    <EmbeddedResource Include="Migrations\201801140056334_SeedActivity.cs" />
     <Compile Include="Migrations\201801140056334_SeedActivity.Designer.cs">
       <DependentUpon>201801140056334_SeedActivity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801141547528_AddPhoto.cs" />
+    <EmbeddedResource Include="Migrations\201801141547528_AddPhoto.cs" />
     <Compile Include="Migrations\201801141547528_AddPhoto.Designer.cs">
       <DependentUpon>201801141547528_AddPhoto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801141628436_TagActivityJoinTable.cs" />
+    <EmbeddedResource Include="Migrations\201801141628436_TagActivityJoinTable.cs" />
     <Compile Include="Migrations\201801141628436_TagActivityJoinTable.Designer.cs">
       <DependentUpon>201801141628436_TagActivityJoinTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801141656447_Category.cs" />
+    <EmbeddedResource Include="Migrations\201801141656447_Category.cs" />
     <Compile Include="Migrations\201801141656447_Category.Designer.cs">
       <DependentUpon>201801141656447_Category.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801240138377_AddAddress.cs" />
+    <EmbeddedResource Include="Migrations\201801240138377_AddAddress.cs" />
     <Compile Include="Migrations\201801240138377_AddAddress.Designer.cs">
       <DependentUpon>201801240138377_AddAddress.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801240158061_UserTags.cs" />
+    <EmbeddedResource Include="Migrations\201801240158061_UserTags.cs" />
     <Compile Include="Migrations\201801240158061_UserTags.Designer.cs">
       <DependentUpon>201801240158061_UserTags.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802042224318_AddressName.cs" />
+    <EmbeddedResource Include="Migrations\201802042224318_AddressName.cs" />
     <Compile Include="Migrations\201802042224318_AddressName.Designer.cs">
       <DependentUpon>201802042224318_AddressName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802280142391_UserActivityMigration.cs" />
+    <Compile Include="Migrations\201802280142391_UserActivityMigration.Designer.cs">
+      <DependentUpon>201802280142391_UserActivityMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModel.cs" />
@@ -298,7 +304,7 @@
     <Compile Include="Models\OrganizationCategory.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\DTO\ActivityDTO.cs" />
-    <Compile Include="Models\OrganizationViewModel.cs" />
+    <Compile Include="Models\DTO\OrganizationDTO.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserActivity.cs" />
@@ -307,6 +313,9 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <EmbeddedResource Include="Migrations\201802280142391_UserActivityMigration.resx">
+      <DependentUpon>201802280142391_UserActivityMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
