@@ -254,6 +254,7 @@
     <Compile Include="Controllers\ActivityListController.cs" />
     <Compile Include="Controllers\Helpers\UserRoleHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -299,6 +300,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\DTO\NewOrganizationDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
     <Compile Include="Models\LegalStatus.cs" />
     <Compile Include="Models\OrganizationCategory.cs" />
