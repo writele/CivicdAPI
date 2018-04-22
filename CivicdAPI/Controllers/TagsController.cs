@@ -10,74 +10,74 @@ using System.Web.Http;
 
 namespace CivicdAPI.Controllers
 {
-    [Authorize]
-    [RoutePrefix("api/activities")]
-    public class TagsController : ApiController
+  [Authorize]
+  [RoutePrefix("api/activities")]
+  public class TagsController : ApiController
+  {
+    [HttpPost]
+    [Route("tags/{tagName}")]
+    public TagDTO CreateTag(string tagName)
     {
-        [HttpPost]
-        [Route("tags/{tagName}")]
-        public TagDTO CreateTag(string tagName)
+      using (var context = new ApplicationDbContext())
+      {
+        if (!User.IsInRole("Admin"))
         {
-            using (var context = new ApplicationDbContext())
-            {
-                if (!User.IsInRole("Admin"))
-                {
-                    throw new HttpException((int)HttpStatusCode.Forbidden, "This functionality is only available to Administrators.");
-                }
-                if (context.Tags.Any(dbTag => dbTag.Name == tagName))
-                {
-                    throw new Exception(string.Format("Tag with tagname: {0} already exists!", tagName));
-                }
-
-                var newTag = new Tag()
-                {
-                    Name = tagName
-                };
-
-                context.Tags.Add(newTag);
-                context.SaveChanges();
-                return new TagDTO()
-                {
-                    Name = newTag.Name,
-                    Id = newTag.ID
-                };
-            }
+          throw new HttpException((int)HttpStatusCode.Forbidden, "This functionality is only available to Administrators.");
+        }
+        if (context.Tags.Any(dbTag => dbTag.Name == tagName))
+        {
+          throw new Exception(string.Format("Tag with tagname: {0} already exists!", tagName));
         }
 
-        [HttpDelete]
-        [Route("tags/{tagName}")]
-        public bool DeleteTag(string tagName)
+        var newTag = new Tag()
         {
-            using (var context = new ApplicationDbContext())
-            {
-                if (!User.IsInRole("Admin"))
-                {
-                    throw new HttpException((int)HttpStatusCode.Forbidden, "This functionality is only available to Administrators.");
-                }
-                if (!context.Tags.Any(dbTag => dbTag.Name == tagName))
-                {
-                    throw new Exception("No Matching tag found.");
-                }
+          Name = tagName
+        };
 
-                var tag = context.Tags.Single(dbTag => dbTag.Name == tagName);
-                context.Tags.Remove(tag);
-                context.SaveChanges();
-                return true;
-            }
-        }
-
-        [HttpGet]
-        [Route("tags")]
-        public IEnumerable<TagDTO> GetAll()
+        context.Tags.Add(newTag);
+        context.SaveChanges();
+        return new TagDTO()
         {
-            using (var context = new ApplicationDbContext())
-            {
-                return context.Tags.Select(dbTag => new TagDTO
-                {
-                    Id = dbTag.ID,
-                    Name = dbTag.Name
-                });
-            }
-        }
+          Name = newTag.Name,
+          Id = newTag.ID
+        };
+      }
     }
+
+    [HttpDelete]
+    [Route("tags/{tagName}")]
+    public bool DeleteTag(string tagName)
+    {
+      using (var context = new ApplicationDbContext())
+      {
+        if (!User.IsInRole("Admin"))
+        {
+          throw new HttpException((int)HttpStatusCode.Forbidden, "This functionality is only available to Administrators.");
+        }
+        if (!context.Tags.Any(dbTag => dbTag.Name == tagName))
+        {
+          throw new Exception("No Matching tag found.");
+        }
+
+        var tag = context.Tags.Single(dbTag => dbTag.Name == tagName);
+        context.Tags.Remove(tag);
+        context.SaveChanges();
+        return true;
+      }
+    }
+
+    [HttpGet]
+    [Route("tags")]
+    public IEnumerable<TagDTO> GetAll()
+    {
+      using (var context = new ApplicationDbContext())
+      {
+        return context.Tags.Select(dbTag => new TagDTO
+        {
+          Id = dbTag.ID,
+          Name = dbTag.Name
+        }).ToList();
+      }
+    }
+  }
 }
