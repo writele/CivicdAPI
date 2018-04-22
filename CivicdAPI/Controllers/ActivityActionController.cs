@@ -1,5 +1,6 @@
 ﻿using CivicdAPI.Controllers.Helpers;
 using CivicdAPI.Models;
+using CivicdAPI.Models.DTO;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -17,8 +18,8 @@ namespace CivicdAPI.Controllers
     public class ActivityActionController : ApiController
     {
         [HttpPost]
-        [Route("activities/{activityId:int}/rsvps/{userName}")]
-        public bool RSVP(int activityId, string userName)
+        [Route("activities/{activityId:int}/rsvps/{userName}/")]
+        public IHttpActionResult RSVP(int activityId, string userName)
         {
 
             using (var context = new ApplicationDbContext())
@@ -34,53 +35,63 @@ namespace CivicdAPI.Controllers
                 {
                     throw new Exception("Invalid Activity Id");
                 }
-                
+                if (!User.IsInRole("Admin") && User.Identity.GetUserId() != user.Id)
+                {
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
+                }
+
                 rsvp.Activity = activity;
                 rsvp.User = user;
 
                 context.UserActivities.Add(rsvp);
                 context.SaveChanges();
 
-                return true;
+                return Ok();
             }
         }
 
         [HttpPost]
-        [Route("activities/{activityId:int}/checkins/{userName}")]
-        public bool CheckInActivity(int activityId, string userName)
+        [Route("activities/{activityId:int}/checkins/{userName}/")]
+        public IHttpActionResult CheckInActivity(int activityId, string userName)
         {
             using (var context = new ApplicationDbContext())
             {
                 var user = context.Users.FirstOrDefault(u => u.UserName == userName);
-                if(user == null)
+                if (user == null)
                 {
                     throw new Exception("Invalid Username");
                 }
 
                 var activity = context.UserActivities.FirstOrDefault(ua => ua.ActivityID == activityId && ua.User.Id == user.Id);
-                if(activity == null)
+                if (activity == null)
                 {
                     throw new Exception("Invalid Activity or User is Not RSVP'd for this Activity");
+                }
+                if (!User.IsInRole("Admin") && User.Identity.GetUserId() != user.Id)
+                {
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
                 }
 
                 activity.CheckedIn = true;
                 context.SaveChanges();
-                return true;
+
+                return Ok();
             }
         }
 
         [HttpPost]
         [Route("activities")]
-        public ActivityViewModel CreateActivity(ActivityViewModel activity)
+        public ActivityDTO CreateActivity(ActivityDTO activity)
         {
             using (var context = new ApplicationDbContext())
             {
-                var user = context.Users.Single(u => u.Id == User.Identity.GetUserId());
+                var loggedInUser = User.Identity.GetUserId();
+                var user = context.Users.Single(u => u.Id == loggedInUser);
                 var organization = context.Users.Single(u => u.Email == activity.Organization.Email);
 
                 var userIsAdmin = User.IsInRole("Admin");
                 var userIsOrg = User.IsInRole("Organization");
-                if (User.IsInRole("User") || ( userIsOrg && user.Id != organization.Id))
+                if (User.IsInRole("User") || (userIsOrg && user.Id != organization.Id))
                 {
                     throw new HttpResponseException(HttpStatusCode.Forbidden);
                 }
@@ -88,9 +99,9 @@ namespace CivicdAPI.Controllers
                 var activityEntity = new Activity()
                 {
                     DisplayTitle = activity.DisplayTitle,
-                    Category = activity.CategoryName,
-                    StartTime = activity.StartTime,
-                    EndTime = activity.EndTime
+                    Category = (ActivityCategory)Enum.Parse(typeof(ActivityCategory), activity.CategoryName, true),
+                    StartTime = DateTimeOffset.Parse(activity.StartTime),
+                    EndTime = DateTimeOffset.Parse(activity.EndTime)
                 };
 
                 if (!String.IsNullOrEmpty(activity.StreetAddressOne))
@@ -113,7 +124,7 @@ namespace CivicdAPI.Controllers
                     Host = !userIsAdmin,
                     CheckedIn = organization.Id == user.Id
                 };
-                
+
                 context.Activities.Add(activityEntity);
                 context.UserActivities.Add(userActivity);
 
@@ -126,11 +137,12 @@ namespace CivicdAPI.Controllers
 
         [HttpPut]
         [Route("activities/{activityId:int}")]
-        public ActivityViewModel UpdateActivity(int activityId, ActivityViewModel activity)
+        public ActivityDTO UpdateActivity(int activityId, ActivityDTO activity)
         {
             using (var context = new ApplicationDbContext())
             {
-                var user = context.Users.Single(u => u.Id == User.Identity.GetUserId());
+                var loggedInUser = User.Identity.GetUserId();
+                var user = context.Users.Single(u => u.Id == loggedInUser);
                 var organization = context.Users.Single(u => u.Email == activity.Organization.Email);
 
                 var userIsAdmin = User.IsInRole("Admin");
@@ -147,9 +159,9 @@ namespace CivicdAPI.Controllers
                 }
 
                 activityEntity.DisplayTitle = activity.DisplayTitle;
-                activityEntity.Category = activity.CategoryName;
-                activityEntity.StartTime = activity.StartTime;
-                activityEntity.EndTime = activity.EndTime;
+                activityEntity.Category = (ActivityCategory)Enum.Parse(typeof(ActivityCategory), activity.CategoryName);
+                activityEntity.StartTime = DateTimeOffset.Parse(activity.StartTime);
+                activityEntity.EndTime = DateTimeOffset.Parse(activity.EndTime);
                 if (!String.IsNullOrEmpty(activity.StreetAddressOne))
                 {
                     if (activityEntity.Address == null)
@@ -186,7 +198,8 @@ namespace CivicdAPI.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                var user = context.Users.Single(u => u.Id == User.Identity.GetUserId());
+                var loggedInUser = User.Identity.GetUserId();
+                var user = context.Users.Single(u => u.Id == loggedInUser);
                 var activityEntity = context.UserActivities.Include("Activities").FirstOrDefault(a => a.ActivityID == activityId);
 
                 var organization = context.Users.Single(u => u.Email == activityEntity.User.Email);
