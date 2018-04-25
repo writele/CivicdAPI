@@ -141,8 +141,9 @@ namespace CivicdAPI.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                var organization = context.Users.Include("Tags").FirstOrDefault(org => org.Email == organizationEmail);
-                if (organization == null)
+                var organization = context.Users.FirstOrDefault(org => org.Email == organizationEmail);
+                //TODO: More elegant solution for ensuring db user is org or user.
+                if (organization == null || !organization.Roles.Any(role => role.RoleId == "27ca283a-bf04-4bec-8318-9baa09a50f77"))  
                 {
                     throw new Exception("Unable to find matching Organization.");
                 }
