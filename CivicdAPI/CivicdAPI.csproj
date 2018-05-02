@@ -221,7 +221,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivityActionController.cs" />
-    <Compile Include="Controllers\ActivityListController.cs" />
     <Compile Include="Controllers\Helpers\UserRoleHelper.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\TagsController.cs" />

@@ -12,6 +12,273 @@ namespace CivicdAPI.Controllers
     [RoutePrefix("api")]
     public class ActivityActionController : ApiController
     {
+
+        /// <summary>
+        /// Get list of all activities in database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("activities")]
+        // GET: api/Activities
+        public IHttpActionResult Get()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                var activities = from a in db.Activities
+                                 select new ActivityDTO()
+                                 {
+                                     Id = a.ID,
+                                     DisplayTitle = a.DisplayTitle,
+                                     Description = a.Description,
+                                     CategoryName = a.Category.ToString(),
+                                     PhotoURL = a.Photo,
+                                     StartTime = a.StartTime.ToString(),
+                                     EndTime = a.EndTime.ToString(),
+                                     AddressDisplayName = a.Address.Name,
+                                     StreetAddressOne = a.Address.StreetAddressOne,
+                                     StreetAddressTwo = a.Address.StreetAddressTwo,
+                                     City = a.Address.City,
+                                     State = a.Address.State,
+                                     ZipCode = a.Address.ZipCode,
+                                     Tags = from t in a.Tags
+                                            select new TagDTO()
+                                            {
+                                                Id = t.ID,
+                                                Name = t.Name
+                                            }
+                                 };
+                return Ok(activities?.ToList());
+            }
+        }
+
+        // GET: api/Activities/5
+        [Route("activities/{id:int}")]
+        [HttpGet]
+        public IHttpActionResult Get(int id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var activities = from a in db.Activities
+                                 where a.ID == id
+                                 select new ActivityDTO()
+                                 {
+                                     Id = a.ID,
+                                     DisplayTitle = a.DisplayTitle,
+                                     Description = a.Description,
+                                     CategoryName = a.Category.ToString(),
+                                     PhotoURL = a.Photo,
+                                     StartTime = a.StartTime.ToString(),
+                                     EndTime = a.EndTime.ToString(),
+                                     AddressDisplayName = a.Address.Name,
+                                     StreetAddressOne = a.Address.StreetAddressOne,
+                                     StreetAddressTwo = a.Address.StreetAddressTwo,
+                                     City = a.Address.City,
+                                     State = a.Address.State,
+                                     ZipCode = a.Address.ZipCode,
+                                     Tags = from t in a.Tags
+                                            select new TagDTO()
+                                            {
+                                                Id = t.ID,
+                                                Name = t.Name
+                                            }
+                                 };
+                return Ok(activities?.ToList());
+            }
+        }
+
+        [Route("activities/tags/{tagName}/")]
+        [HttpGet]
+        public IHttpActionResult GetByTag(string tagName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var tag = db.Tags.Include("Activities").FirstOrDefault(t => t.Name == tagName);
+                if (tag == null)
+                {
+                    throw new Exception("No matching tags found");
+                }
+
+                var activities = tag.Activities.Select(act => new ActivityDTO
+                {
+                    AddressDisplayName = act.Address.Name,
+                    CategoryName = act.Category.ToString(),
+                    City = act.Address.City,
+                    Description = act.Description,
+                    DisplayTitle = act.DisplayTitle,
+                    EndTime = act.EndTime.ToString(),
+                    Id = act.ID,
+                    PhotoURL = act.Photo,
+                    StartTime = act.StartTime.ToString(),
+                    State = act.Address.State,
+                    StreetAddressOne = act.Address.StreetAddressOne,
+                    StreetAddressTwo = act.Address.StreetAddressTwo,
+                    ZipCode = act.Address.ZipCode,
+                    Tags = act.Tags.Select(t => new TagDTO
+                    {
+                        Id = t.ID,
+                        Name = t.Name
+                    })
+                });
+
+                return Ok(activities?.ToList());
+            }
+        }
+
+        [HttpGet]
+        [Route("activities")]
+        public IHttpActionResult GetByDateRange(DateTime startDate, DateTime endDate)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var activities = db.Activities
+                        .Include("Tags")
+                        .Where(act => act.StartTime <= startDate && act.EndTime >= endDate)
+                        .Select(act => new ActivityDTO
+                        {
+                            AddressDisplayName = act.Address.Name,
+                            CategoryName = act.Category.ToString(),
+                            City = act.Address.City,
+                            Description = act.Description,
+                            DisplayTitle = act.DisplayTitle,
+                            EndTime = act.EndTime.ToString(),
+                            Id = act.ID,
+                            PhotoURL = act.Photo,
+                            StartTime = act.StartTime.ToString(),
+                            State = act.Address.State,
+                            StreetAddressOne = act.Address.StreetAddressOne,
+                            StreetAddressTwo = act.Address.StreetAddressTwo,
+                            ZipCode = act.Address.ZipCode,
+                            Tags = act.Tags.Select(t => new TagDTO
+                            {
+                                Id = t.ID,
+                                Name = t.Name
+                            })
+                        });
+                return Ok(activities?.ToList());
+            }
+        }
+
+        // GET: api/Activities/
+        [HttpGet]
+        [Route("activities/categories/{categoryName}/")]
+        public IHttpActionResult GetCategory(string categoryName)
+        {
+            var categoryInt = (ActivityCategory)Enum.Parse(typeof(ActivityCategory), categoryName, true);
+            var categoryEnum = (ActivityCategory)Enum.ToObject(typeof(ActivityCategory), categoryInt);
+            using (var db = new ApplicationDbContext())
+            {
+
+                var activities = from a in db.Activities
+                                 where a.Category == categoryEnum
+                                 select new ActivityDTO()
+                                 {
+                                     Id = a.ID,
+                                     DisplayTitle = a.DisplayTitle,
+                                     Description = a.Description,
+                                     CategoryName = a.Category.ToString(),
+                                     PhotoURL = a.Photo,
+                                     StartTime = a.StartTime.ToString(),
+                                     EndTime = a.EndTime.ToString(),
+                                     StreetAddressOne = a.Address.StreetAddressOne,
+                                     StreetAddressTwo = a.Address.StreetAddressTwo,
+                                     City = a.Address.City,
+                                     State = a.Address.State,
+                                     Tags = from t in a.Tags
+                                            select new TagDTO()
+                                            {
+                                                Id = t.ID,
+                                                Name = t.Name
+                                            }
+                                 };
+                return Ok(activities?.ToList());
+            }
+        }
+
+        [HttpGet]
+        [Route("activities/organizations/{organizationUserName}/")]
+        public IHttpActionResult GetByOrganization(string organizationUserName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var activities = db.UserActivities
+                        .Include("Activity")
+                        .Include("User")
+                        .Where(ua => ua.User.UserName == organizationUserName)
+                        .Select(ua => ua.Activity);
+
+                var activityModels = activities.Select(act => new ActivityDTO
+                {
+                    AddressDisplayName = act.Address.Name,
+                    CategoryName = act.Category.ToString(),
+                    City = act.Address.City,
+                    Description = act.Description,
+                    DisplayTitle = act.DisplayTitle,
+                    EndTime = act.EndTime.ToString(),
+                    Id = act.ID,
+                    PhotoURL = act.Photo,
+                    StartTime = act.StartTime.ToString(),
+                    State = act.Address.State,
+                    StreetAddressOne = act.Address.StreetAddressOne,
+                    StreetAddressTwo = act.Address.StreetAddressTwo,
+                    ZipCode = act.Address.ZipCode,
+                    Tags = act.Tags.Select(t => new TagDTO
+                    {
+                        Id = t.ID,
+                        Name = t.Name
+                    })
+                });
+                return Ok(activityModels?.ToList());
+            }
+        }
+
+        [HttpGet]
+        [Route("activities/users/{userName}/")]
+        public IHttpActionResult GetByUser(string userName)
+        {
+            var loggedInUser = User.Identity.GetUserId();
+            using (var db = new ApplicationDbContext())
+            {
+
+                var selectedUser = db.Users.FirstOrDefault(user => user.UserName == userName);
+
+                if (selectedUser.Id != loggedInUser || !User.IsInRole("Admin"))
+                {
+                    throw new Exception("You can not access another user's activities.");
+                }
+
+                var activities = db.UserActivities
+                    .Include("Activity")
+                    .Include("User")
+                    .Where(ua => ua.User.UserName == userName)
+                    .Select(ua => ua.Activity);
+
+                var models = activities.Select(act => new ActivityDTO
+                {
+                    AddressDisplayName = act.Address.Name,
+                    CategoryName = act.Category.ToString(),
+                    City = act.Address.City,
+                    Description = act.Description,
+                    DisplayTitle = act.DisplayTitle,
+                    EndTime = act.EndTime.ToString(),
+                    Id = act.ID,
+                    PhotoURL = act.Photo,
+                    StartTime = act.StartTime.ToString(),
+                    State = act.Address.State,
+                    StreetAddressOne = act.Address.StreetAddressOne,
+                    StreetAddressTwo = act.Address.StreetAddressTwo,
+                    ZipCode = act.Address.ZipCode,
+                    Tags = act.Tags.Select(t => new TagDTO
+                    {
+                        Id = t.ID,
+                        Name = t.Name
+                    })
+                });
+
+                return Ok(models?.ToList());
+            }
+        }
+
         [HttpPost]
         [Route("activities/{activityId:int}/rsvps/{userName}/")]
         public IHttpActionResult RSVP(int activityId, string userName)
