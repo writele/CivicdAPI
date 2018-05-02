@@ -75,7 +75,7 @@ namespace CivicdAPI.Controllers
         }
 
         [HttpPut]
-        [Route("organizations/{organizationEmail}")]
+        [Route("organizations/{organizationEmail}/")]
         public OrganizationDTO UpdateOrganization(string organizationEmail, [FromBody] OrganizationDTO organization)
         {
             using (var context = new ApplicationDbContext())
@@ -115,7 +115,7 @@ namespace CivicdAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("organizations/{organizationEmail}")]
+        [Route("organizations/{organizationEmail}/")]
         public IHttpActionResult DeleteOrganization(string organizationEmail)
         {
             using (var context = new ApplicationDbContext())
@@ -136,7 +136,7 @@ namespace CivicdAPI.Controllers
         }
 
         [HttpGet]
-        [Route("organizations/{organizationEmail}")]
+        [Route("organizations/{organizationEmail}/")]
         public OrganizationDTO GetOrganization(string organizationEmail)
         {
             using (var context = new ApplicationDbContext())
