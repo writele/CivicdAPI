@@ -1,10 +1,6 @@
 ﻿using CivicdAPI.Models.DTO;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security;
-using System.Web;
 
 namespace CivicdAPI.Models
 {
