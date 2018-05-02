@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using CivicdAPI.Models;
 using CivicdAPI.Models.DTO;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace CivicdAPI.Controllers
@@ -82,7 +83,7 @@ namespace CivicdAPI.Controllers
             return activities;
         }
 
-        [Route("tags/{tagName}")]
+        [Route("tags/{tagName}/")]
         public IEnumerable<ActivityDTO> GetByTag(string tagName)
         {
             var tag = db.Tags.Include("Activities").FirstOrDefault(t => t.Name == tagName);
@@ -113,7 +114,7 @@ namespace CivicdAPI.Controllers
                 })
             });
         }
-
+        
         public IQueryable<ActivityDTO> GetByDateRange(DateTime startDate, DateTime endDate)
         {
             return db.Activities
@@ -143,7 +144,7 @@ namespace CivicdAPI.Controllers
         }
 
         // GET: api/Activities/
-        [Route("categories/{categoryName}")]
+        [Route("categories/{categoryName}/")]
         public IQueryable<ActivityDTO> GetCategory(string categoryName)
         {
             var categoryInt = (ActivityCategory)Enum.Parse(typeof(ActivityCategory), categoryName, true);
@@ -174,13 +175,54 @@ namespace CivicdAPI.Controllers
             return activities;
         }
 
-        [Route("organization/{organizationUserName}")]
+        [Route("organizations/{organizationUserName}/")]
         public IQueryable<ActivityDTO> GetByOrganization(string organizationUserName)
         {
             var activities = db.UserActivities
                 .Include("Activity")
                 .Include("User")
                 .Where(ua => ua.User.UserName == organizationUserName)
+                .Select(ua => ua.Activity);
+
+            return activities.Select(act => new ActivityDTO
+            {
+                AddressDisplayName = act.Address.Name,
+                CategoryName = Enum.GetName(typeof(ActivityCategory), act.Category),
+                City = act.Address.City,
+                Description = act.Description,
+                DisplayTitle = act.DisplayTitle,
+                EndTime = act.EndTime.ToString(),
+                Id = act.ID,
+                PhotoURL = act.Photo,
+                StartTime = act.StartTime.ToString(),
+                State = act.Address.State,
+                StreetAddressOne = act.Address.StreetAddressOne,
+                StreetAddressTwo = act.Address.StreetAddressTwo,
+                ZipCode = act.Address.ZipCode,
+                Tags = act.Tags.Select(t => new TagDTO
+                {
+                    Id = t.ID,
+                    Name = t.Name
+                })
+            });
+        }
+
+        [Route("users/{userName}/")]
+        public IQueryable<ActivityDTO> GetByUser(string userName)
+        {
+            var loggedInUser = User.Identity.GetUserId();
+
+            var selectedUser = db.Users.FirstOrDefault(user => user.UserName == userName);
+
+            if (selectedUser.Id != loggedInUser || User.IsInRole("Admin"))
+            {
+                return null;
+            }
+
+            var activities = db.UserActivities
+                .Include("Activity")
+                .Include("User")
+                .Where(ua => ua.User.UserName == userName)
                 .Select(ua => ua.Activity);
 
             return activities.Select(act => new ActivityDTO
