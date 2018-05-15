@@ -80,27 +80,6 @@ namespace CivicdAPI.Migrations
             var userId3 = userManager.FindByEmail("civicduser@mailinator.com").Id;
             userManager.AddToRole(userId3, "User");
 
-            context.Activities.AddOrUpdate(
-                p => p.DisplayTitle,
-                new Activity
-                {
-                    DisplayTitle = "City Council Meeting",
-                    Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-                    Category = ActivityCategory.Government
-                },
-                new Activity
-                {
-                    DisplayTitle = "Phone Bank",
-                    Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-                    Category = ActivityCategory.Protest
-                },
-                new Activity
-                {
-                    DisplayTitle = "School Meeting",
-                    Description = "Lorem ipsum dolor sit amet, eripuit lobortis sapientem pri no, ut sed delenit honestatis. An diceret copiosae pri, ius quas possit ea. Id pri partiendo salutatus disputando. Id nam minim minimum repudiare, ex harum commune interesset usu. Semper dissentiunt eum in. Simul graeco tacimates ius in.",
-                    Category = ActivityCategory.School
-                }
-            );
             context.Tags.AddOrUpdate(
                 p => p.Name,
                 new Tag
@@ -322,6 +301,7 @@ namespace CivicdAPI.Migrations
 
             context.SaveChanges();
 
+          
         }
     }
 }
